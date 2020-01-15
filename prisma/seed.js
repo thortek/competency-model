@@ -1,21 +1,13 @@
-import { Photon } from '@prisma/photon'
+const { Photon } = require('@prisma/photon')
 const photon = new Photon()
 
 async function main() {
-  const user1 = await photon.users.create({
+  const course1 = await photon.courses.create({
     data: {
-      email: 'alice@prisma.io',
-      name: 'Alice',
-      posts: {
-        create: {
-          title: 'Join us for GraphQL Conf 2019 in Berlin',
-          content: 'https://www.graphqlconf.org/',
-          published: true,
-        },
-      },
+      description: 'This is the course on that stuff',
     },
   })
-  const user2 = await photon.users.create({
+/*   const user2 = await photon.users.create({
     data: {
       email: 'bob@prisma.io',
       name: 'Bob',
@@ -34,8 +26,8 @@ async function main() {
         ],
       },
     },
-  })
-  console.log({ user1, user2 })
+  }) */
+  console.log({ course1 })
 }
 
 main()
