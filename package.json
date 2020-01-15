@@ -3,34 +3,22 @@
   "scripts": {
     "nuke": "docker stop pg-comp-model && docker rm pg-comp-model && docker volume rm pgdata",
     "launchDocker": "docker run --name pg-comp-model -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v pgdata:/var/lib/postgresql/data postgres:latest",
-    "prestart": "npm run build",
-    "start": "node dist/server",
-    "clean": "rm -rf dist",
-    "build": "npm -s run clean && npm -s run generate && tsc",
-    "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
-    "generate:prisma": "prisma2 generate",
-    "generate:nexus": "ts-node --transpile-only src/schema",
+    "start": "node -r esm src",
+    "generate": "npx prisma2 generate",
     "postinstall": "npm -s run generate",
-    "dev": "ts-node-dev --no-notify --respawn --transpileOnly src/server",
-    "uvu-seed": "ts-node src/seed/uvu-seed.ts",
-    "fcc-seed": "ts-node src/seed/fcc-seed.ts",
-    "seed": "npm run uvu-seed && npm run fcc-seed"
+    "dev": "node -r esm src",
+    "seed": "node -r esm prisma/seed"
   },
   "dependencies": {
     "@prisma/photon": "2.0.0-preview019",
-    "@types/node-fetch": "2.5.4",
     "apollo-server": "2.9.13",
+    "esm": "^3.2.25",
     "graphql": "14.5.8",
     "nexus": "0.12.0-rc.5",
     "nexus-prisma": "0.6.1"
   },
   "devDependencies": {
-    "@prisma/sdk": "0.0.93",
-    "@types/node": "12.12.14",
-    "prisma2": "2.0.0-preview019",
-    "ts-node": "8.5.4",
-    "ts-node-dev": "1.0.0-pre.44",
-    "typescript": "3.7.3"
+    "prisma2": "2.0.0-preview019"
   },
   "prettier": {
     "singleQuote": true,

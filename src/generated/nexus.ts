@@ -3,8 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import * as Context from "../context"
-import * as photon from "@prisma/photon"
+
 
 
 
@@ -26,7 +25,10 @@ export interface NexusGenEnums {
 }
 
 export interface NexusGenRootTypes {
-  Course: photon.Course;
+  Course: { // root type
+    description: string; // String!
+    id: string; // ID!
+  }
   Query: {};
   String: string;
   Int: number;
@@ -74,7 +76,7 @@ export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
 export type NexusGenUnionNames = never;
 
 export interface NexusGenTypes {
-  context: Context.Context;
+  context: any;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
   argTypes: NexusGenArgTypes;
