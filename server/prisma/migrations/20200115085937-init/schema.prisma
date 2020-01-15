@@ -1,6 +1,6 @@
 datasource postgres {
   provider = "postgresql"
-  url      = "postgresql://postgres:docker@localhost:5432/pg-comp-model?schema=public"
+  url = "***"
 }
 
 generator photon {

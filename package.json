@@ -1,15 +1,20 @@
 {
-  "name": "typescript-graphql",
+  "name": "competency-model",
   "scripts": {
+    "nuke": "docker stop pg-comp-model && docker rm pg-comp-model && docker volume rm pgdata",
+    "launchDocker": "docker run --name pg-comp-model -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v pgdata:/var/lib/postgresql/data postgres:latest",
+    "prestart": "npm run build",
     "start": "node dist/server",
     "clean": "rm -rf dist",
     "build": "npm -s run clean && npm -s run generate && tsc",
     "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
-    "generate:prisma": "prisma2 generate",
-    "generate:nexus": "ts-node --transpile-only src/schema",
+    "generate:prisma": "cd server && prisma2 generate",
+    "generate:nexus": "ts-node --transpile-only server/src/schema",
     "postinstall": "npm -s run generate",
-    "dev": "ts-node-dev --no-notify --respawn --transpileOnly src/server",
-    "seed": "ts-node prisma/seed"
+    "dev": "ts-node-dev --no-notify --respawn --transpileOnly server/src/server",
+    "uvu-seed": "ts-node server/src/seed/uvu-seed.ts",
+    "fcc-seed": "ts-node server/src/seed/fcc-seed.ts",
+    "seed": "npm run uvu-seed && npm run fcc-seed"
   },
   "dependencies": {
     "@prisma/photon": "2.0.0-preview019",
