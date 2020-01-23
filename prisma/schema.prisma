@@ -7,29 +7,139 @@ generator photon {
   provider = "photonjs"
 }
 
+enum AssociationType {
+    ExactMatchOf
+    Precedes
+    IsChildOf
+    IsParentOf
+    HasSkillLevel
+    ReplacedBy
+    IsPartOf
+    Exemplar
+    IsRelatedTo
+    IsPeerOf
+}
+
+enum EntityType {
+    Basic
+    Competency
+    Course
+    Degree
+    Certificate
+    Assessment
+    CoCurricular
+}
+
+enum BloomLevel {
+  CREATE
+  EVALUATE
+  ANALYZE
+  APPLY
+  UNDERSTAND
+  REMEMBER
+  INFO
+}
+
+model Association {
+    id        String   @default(cuid()) @id
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    type String
+    associationType AssociationType
+    entityType EntityType
+    entityId String
+    additionalProperties String?
+}
+
+model Competency {
+    id        String   @default(cuid()) @id
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    type EntityType
+    name String
+    description String?
+    defaultCredits String?
+    defaultPoints String?
+    sourcedId String?
+    associations Association?
+    alternativeLabel String?
+    additionalProperties String?
+    humanCodingScheme String?
+    CFDocumentURI String?
+    bloomCategory BloomLevel?
+    resources Resource[]
+    tags Tag[]
+    issuer Issuer @relation(name: "CompetencyIssuer")
+    endorsements Issuer[] @relation(name: "CompetencyEndorsements")
+}
+
 model Course {
   id        String   @default(cuid()) @id
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  coreq     String
-  crossListed String
-  description String
-  geCode    String
-  labCredits  String
-  lectureCredits  String
-  number  String
-  prefix  String
-  preorco String
-  prereq  String
-  subject String
-  termsOffered  String
-  title String
-  totalCredits  String
+  type EntityType @default(Course)
+    name String
+    description String
+    defaultCredits String
+    defaultPoints String?
+    sourcedId String?
+    associations Association[]
+    alternativeLabel String?
+    additionalProperties String?
+    courseCode String
+    startDate DateTime?
+    endDate DateTime?
+    issuer Issuer @relation(name: "CourseIssuer")
+    endorsements Issuer[] @relation(name: "CourseEndorsements")
 }
 
-model Competency {
+model Issuer {
   id        String   @default(cuid()) @id
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+    type String @default(value: "Issuer") 
+    name String
+    url String @unique
+    address String?
+    phone String?
+    logo String?
+    issuingPersonFullName String
+    issuingPersonTitle String
+    additionalProperties String?
 }
+
+model Resource {
+  id        String   @default(cuid()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  description String
+  url String
+  tags Tag[]
+  issuer Issuer @relation(name: "ResourceIssuer")
+  endorsements Issuer[] @relation(name: "ResourceEndorsements")
+}
+
+model Tag {
+  id        String   @default(cuid()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  issuer Issuer
+  name String
+  conceptualCategory ConceptualCategory
+  orderWithinCategory Int
+}
+
+model ConceptualCategory {
+  id        String   @default(cuid()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  issuer Issuer
+  name String
+  description String
+}
+
+
+
+
+
+

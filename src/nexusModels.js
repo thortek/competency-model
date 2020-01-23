@@ -1,4 +1,4 @@
-const { objectType, enumType } = require('nexus')
+import { objectType, enumType } from 'nexus'
 
 const Course = objectType({
     name: 'Course',

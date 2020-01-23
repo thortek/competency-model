@@ -1,12 +1,13 @@
 {
   "name": "competency-model",
   "scripts": {
-    "nuke": "docker stop pg-comp-model && docker rm pg-comp-model && docker volume rm pgdata",
+    "nuke": "docker stop pg-comp-model && docker rm pg-comp-model && docker volume rm pgdata && rm -rf prisma/migrations",
     "launchDocker": "docker run --name pg-comp-model -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v pgdata:/var/lib/postgresql/data postgres:latest",
-    "start": "node -r esm src",
+    "createDB": "npx prisma2 lift save --name 'init' && npx prisma2 lift up",
     "generate": "npx prisma2 generate",
     "postinstall": "npm -s run generate",
-    "dev": "node -r esm src",
+    "dev": "npx prisma2 dev",
+    "start": "node -r esm src",
     "seed": "node -r esm prisma/seed"
   },
   "dependencies": {

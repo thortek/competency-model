@@ -1,4 +1,4 @@
-const { idArg, queryType, stringArg } = require('nexus')
+import { idArg, queryType, stringArg } from 'nexus'
 
 export const Query = queryType({
     definition(t) {

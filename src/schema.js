@@ -1,7 +1,7 @@
-const { nexusPrismaPlugin } = require('nexus-prisma')
-const { idArg, makeSchema, objectType, stringArg } = require('nexus')
-const { Query } = require('./query')
-const { Models } = require('./nexusModels')
+import { nexusPrismaPlugin } from 'nexus-prisma'
+import { idArg, makeSchema, objectType, stringArg } from 'nexus'
+import { Query } from './query'
+import { Models } from './nexusModels'
 
 
 export const schema = makeSchema({

@@ -1,6 +1,6 @@
-const { ApolloServer } = require('apollo-server')
-const { schema } = require('./schema')
-const { Photon } = require('@prisma/photon')
+import { ApolloServer } from 'apollo-server'
+import { schema } from './schema'
+import { Photon } from '@prisma/photon'
 
 
 const photon = new Photon()
