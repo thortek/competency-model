@@ -22,38 +22,268 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  AssociationType: "ExactMatchOf" | "Exemplar" | "HasSkillLevel" | "IsChildOf" | "IsParentOf" | "IsPartOf" | "IsPeerOf" | "IsRelatedTo" | "Precedes" | "ReplacedBy"
+  BloomLevel: "ANALYZE" | "APPLY" | "CREATE" | "EVALUATE" | "INFO" | "REMEMBER" | "UNDERSTAND"
+  EntityType: "Assessment" | "Basic" | "Certificate" | "CoCurricular" | "Competency" | "Course" | "Degree"
 }
 
 export interface NexusGenRootTypes {
-  Course: { // root type
+  Association: { // root type
+    additionalProperties?: string | null; // String
+    associationType: NexusGenEnums['AssociationType']; // AssociationType!
+    createdAt: any; // DateTime!
+    entityId: string; // String!
+    entityType: NexusGenEnums['EntityType']; // EntityType!
+    id: string; // ID!
+    type: string; // String!
+    updatedAt: any; // DateTime!
+  }
+  Competency: { // root type
+    additionalProperties?: string | null; // String
+    alternativeLabel?: string | null; // String
+    bloomCategory?: NexusGenEnums['BloomLevel'] | null; // BloomLevel
+    CFDocumentURI?: string | null; // String
+    createdAt: any; // DateTime!
+    defaultCredits?: string | null; // String
+    defaultPoints?: string | null; // String
+    description?: string | null; // String
+    humanCodingScheme?: string | null; // String
+    id: string; // ID!
+    name: string; // String!
+    sourcedId?: string | null; // String
+    type: NexusGenEnums['EntityType']; // EntityType!
+    updatedAt: any; // DateTime!
+  }
+  ConceptualCategory: { // root type
+    createdAt: any; // DateTime!
     description: string; // String!
     id: string; // ID!
+    name: string; // String!
+    updatedAt: any; // DateTime!
+  }
+  Course: { // root type
+    additionalProperties?: string | null; // String
+    alternativeLabel?: string | null; // String
+    courseCode: string; // String!
+    createdAt: any; // DateTime!
+    defaultCredits: string; // String!
+    defaultPoints?: string | null; // String
+    description: string; // String!
+    endDate?: any | null; // DateTime
+    id: string; // ID!
+    name: string; // String!
+    sourcedId?: string | null; // String
+    startDate?: any | null; // DateTime
+    type: NexusGenEnums['EntityType']; // EntityType!
+    updatedAt: any; // DateTime!
+  }
+  Issuer: { // root type
+    additionalProperties?: string | null; // String
+    address?: string | null; // String
+    createdAt: any; // DateTime!
+    id: string; // ID!
+    issuingPersonFullName: string; // String!
+    issuingPersonTitle: string; // String!
+    logo?: string | null; // String
+    name: string; // String!
+    phone?: string | null; // String
+    type: string; // String!
+    updatedAt: any; // DateTime!
+    url: string; // String!
   }
   Query: {};
+  Resource: { // root type
+    createdAt: any; // DateTime!
+    description: string; // String!
+    id: string; // ID!
+    updatedAt: any; // DateTime!
+    url: string; // String!
+  }
+  Tag: { // root type
+    createdAt: any; // DateTime!
+    id: string; // ID!
+    name: string; // String!
+    orderWithinCategory: number; // Int!
+    updatedAt: any; // DateTime!
+  }
   String: string;
   Int: number;
   Float: number;
   Boolean: boolean;
   ID: string;
+  DateTime: any;
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  AssociationType: NexusGenEnums['AssociationType'];
+  BloomLevel: NexusGenEnums['BloomLevel'];
+  EntityType: NexusGenEnums['EntityType'];
 }
 
 export interface NexusGenFieldTypes {
-  Course: { // field return type
+  Association: { // field return type
+    additionalProperties: string | null; // String
+    associationType: NexusGenEnums['AssociationType']; // AssociationType!
+    createdAt: any; // DateTime!
+    entityId: string; // String!
+    entityType: NexusGenEnums['EntityType']; // EntityType!
+    id: string; // ID!
+    type: string; // String!
+    updatedAt: any; // DateTime!
+  }
+  Competency: { // field return type
+    additionalProperties: string | null; // String
+    alternativeLabel: string | null; // String
+    associations: NexusGenRootTypes['Association'][]; // [Association!]!
+    bloomCategory: NexusGenEnums['BloomLevel'] | null; // BloomLevel
+    CFDocumentURI: string | null; // String
+    createdAt: any; // DateTime!
+    defaultCredits: string | null; // String
+    defaultPoints: string | null; // String
+    description: string | null; // String
+    endorsements: NexusGenRootTypes['Issuer'][]; // [Issuer!]!
+    humanCodingScheme: string | null; // String
+    id: string; // ID!
+    issuer: NexusGenRootTypes['Issuer']; // Issuer!
+    name: string; // String!
+    resources: NexusGenRootTypes['Resource'][]; // [Resource!]!
+    sourcedId: string | null; // String
+    tags: NexusGenRootTypes['Tag'][]; // [Tag!]!
+    type: NexusGenEnums['EntityType']; // EntityType!
+    updatedAt: any; // DateTime!
+  }
+  ConceptualCategory: { // field return type
+    createdAt: any; // DateTime!
     description: string; // String!
     id: string; // ID!
+    issuer: NexusGenRootTypes['Issuer']; // Issuer!
+    name: string; // String!
+    updatedAt: any; // DateTime!
+  }
+  Course: { // field return type
+    additionalProperties: string | null; // String
+    alternativeLabel: string | null; // String
+    associations: NexusGenRootTypes['Association'][]; // [Association!]!
+    courseCode: string; // String!
+    createdAt: any; // DateTime!
+    defaultCredits: string; // String!
+    defaultPoints: string | null; // String
+    description: string; // String!
+    endDate: any | null; // DateTime
+    endorsements: NexusGenRootTypes['Issuer'][]; // [Issuer!]!
+    id: string; // ID!
+    issuer: NexusGenRootTypes['Issuer']; // Issuer!
+    name: string; // String!
+    sourcedId: string | null; // String
+    startDate: any | null; // DateTime
+    type: NexusGenEnums['EntityType']; // EntityType!
+    updatedAt: any; // DateTime!
+  }
+  Issuer: { // field return type
+    additionalProperties: string | null; // String
+    address: string | null; // String
+    createdAt: any; // DateTime!
+    id: string; // ID!
+    issuingPersonFullName: string; // String!
+    issuingPersonTitle: string; // String!
+    logo: string | null; // String
+    name: string; // String!
+    phone: string | null; // String
+    type: string; // String!
+    updatedAt: any; // DateTime!
+    url: string; // String!
   }
   Query: { // field return type
+    getAllCourses: NexusGenRootTypes['Course'][]; // [Course!]!
     getCourseByID: NexusGenRootTypes['Course'] | null; // Course
+  }
+  Resource: { // field return type
+    createdAt: any; // DateTime!
+    description: string; // String!
+    endorsements: NexusGenRootTypes['Issuer'][]; // [Issuer!]!
+    id: string; // ID!
+    issuer: NexusGenRootTypes['Issuer']; // Issuer!
+    tags: NexusGenRootTypes['Tag'][]; // [Tag!]!
+    updatedAt: any; // DateTime!
+    url: string; // String!
+  }
+  Tag: { // field return type
+    conceptualCategory: NexusGenRootTypes['ConceptualCategory']; // ConceptualCategory!
+    createdAt: any; // DateTime!
+    id: string; // ID!
+    issuer: NexusGenRootTypes['Issuer']; // Issuer!
+    name: string; // String!
+    orderWithinCategory: number; // Int!
+    updatedAt: any; // DateTime!
   }
 }
 
 export interface NexusGenArgTypes {
+  Competency: {
+    associations: { // args
+      after?: string | null; // ID
+      before?: string | null; // ID
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+    endorsements: { // args
+      after?: string | null; // ID
+      before?: string | null; // ID
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+    resources: { // args
+      after?: string | null; // ID
+      before?: string | null; // ID
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+    tags: { // args
+      after?: string | null; // ID
+      before?: string | null; // ID
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+  }
+  Course: {
+    associations: { // args
+      after?: string | null; // ID
+      before?: string | null; // ID
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+    endorsements: { // args
+      after?: string | null; // ID
+      before?: string | null; // ID
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+  }
   Query: {
     getCourseByID: { // args
       id?: string | null; // ID
+    }
+  }
+  Resource: {
+    endorsements: { // args
+      after?: string | null; // ID
+      before?: string | null; // ID
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
+    }
+    tags: { // args
+      after?: string | null; // ID
+      before?: string | null; // ID
+      first?: number | null; // Int
+      last?: number | null; // Int
+      skip?: number | null; // Int
     }
   }
 }
@@ -63,15 +293,15 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Course" | "Query";
+export type NexusGenObjectNames = "Association" | "Competency" | "ConceptualCategory" | "Course" | "Issuer" | "Query" | "Resource" | "Tag";
 
 export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = "AssociationType" | "BloomLevel" | "EntityType";
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "String";
 
 export type NexusGenUnionNames = never;
 

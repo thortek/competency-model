@@ -2,11 +2,145 @@
 ### Do not make changes to this file directly
 
 
-type Course {
+type Association {
+  additionalProperties: String
+  associationType: AssociationType!
+  createdAt: DateTime!
+  entityId: String!
+  entityType: EntityType!
+  id: ID!
+  type: String!
+  updatedAt: DateTime!
+}
+
+"""Indicates the nature of association between instructional entities."""
+enum AssociationType {
+  ExactMatchOf
+  Exemplar
+  HasSkillLevel
+  IsChildOf
+  IsParentOf
+  IsPartOf
+  IsPeerOf
+  IsRelatedTo
+  Precedes
+  ReplacedBy
+}
+
+"""
+Indicates instructional level of the entity based on Blooms Taxonomy(revised)
+"""
+enum BloomLevel {
+  ANALYZE
+  APPLY
+  CREATE
+  EVALUATE
+  INFO
+  REMEMBER
+  UNDERSTAND
+}
+
+type Competency {
+  additionalProperties: String
+  alternativeLabel: String
+  associations(after: ID, before: ID, first: Int, last: Int, skip: Int): [Association!]!
+  bloomCategory: BloomLevel
+  CFDocumentURI: String
+  createdAt: DateTime!
+  defaultCredits: String
+  defaultPoints: String
+  description: String
+  endorsements(after: ID, before: ID, first: Int, last: Int, skip: Int): [Issuer!]!
+  humanCodingScheme: String
+  id: ID!
+  issuer: Issuer!
+  name: String!
+  resources(after: ID, before: ID, first: Int, last: Int, skip: Int): [Resource!]!
+  sourcedId: String
+  tags(after: ID, before: ID, first: Int, last: Int, skip: Int): [Tag!]!
+  type: EntityType!
+  updatedAt: DateTime!
+}
+
+type ConceptualCategory {
+  createdAt: DateTime!
   description: String!
   id: ID!
+  issuer: Issuer!
+  name: String!
+  updatedAt: DateTime!
+}
+
+type Course {
+  additionalProperties: String
+  alternativeLabel: String
+  associations(after: ID, before: ID, first: Int, last: Int, skip: Int): [Association!]!
+  courseCode: String!
+  createdAt: DateTime!
+  defaultCredits: String!
+  defaultPoints: String
+  description: String!
+  endDate: DateTime
+  endorsements(after: ID, before: ID, first: Int, last: Int, skip: Int): [Issuer!]!
+  id: ID!
+  issuer: Issuer!
+  name: String!
+  sourcedId: String
+  startDate: DateTime
+  type: EntityType!
+  updatedAt: DateTime!
+}
+
+scalar DateTime
+
+"""Indicates the type of the instructional entity."""
+enum EntityType {
+  Assessment
+  Basic
+  Certificate
+  CoCurricular
+  Competency
+  Course
+  Degree
+}
+
+type Issuer {
+  additionalProperties: String
+  address: String
+  createdAt: DateTime!
+  id: ID!
+  issuingPersonFullName: String!
+  issuingPersonTitle: String!
+  logo: String
+  name: String!
+  phone: String
+  type: String!
+  updatedAt: DateTime!
+  url: String!
 }
 
 type Query {
+  getAllCourses: [Course!]!
   getCourseByID(id: ID): Course
+}
+
+type Resource {
+  createdAt: DateTime!
+  description: String!
+  endorsements(after: ID, before: ID, first: Int, last: Int, skip: Int): [Issuer!]!
+  id: ID!
+  issuer: Issuer!
+  tags(after: ID, before: ID, first: Int, last: Int, skip: Int): [Tag!]!
+  updatedAt: DateTime!
+  url: String!
+}
+
+type Tag {
+  conceptualCategory: ConceptualCategory!
+  createdAt: DateTime!
+  id: ID!
+  issuer: Issuer!
+  name: String!
+  orderWithinCategory: Int!
+  updatedAt: DateTime!
 }
