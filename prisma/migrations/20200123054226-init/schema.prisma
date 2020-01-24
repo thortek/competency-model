@@ -1,6 +1,6 @@
 datasource postgres {
   provider = "postgresql"
-  url      = "postgresql://postgres:docker@localhost:5432/pg-comp-model?schema=public"
+  url = "***"
 }
 
 generator photon {
@@ -61,7 +61,7 @@ model Competency {
     defaultCredits String?
     defaultPoints String?
     sourcedId String?
-    associations Association[]
+    associations Association?
     alternativeLabel String?
     additionalProperties String?
     humanCodingScheme String?
