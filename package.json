@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@prisma/photon": "2.0.0-preview019",
-    "apollo-server": "2.9.13",
+    "apollo-server": "2.25.3",
     "esm": "^3.2.25",
     "graphql": "14.5.8",
     "nexus": "0.12.0-rc.5",
